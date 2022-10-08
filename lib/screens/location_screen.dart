@@ -27,12 +27,21 @@ class _LocationScreenState extends State<LocationScreen> {
   }
 
   void updateUI(dynamic weatherData) {
-    double temp = weatherData['main']['temp'];
-    temperature = temp.toInt();
-    var condition = weatherData['weather'][0]['id'];
-    weatherIcon = weather.getWeatherIcon(condition);
-    weatherMessage = weather.getMessage(temperature!);
-    cityName = weatherData['name'];
+    setState(() {
+      if (weatherData == null) {
+        temperature = 0;
+        weatherIcon = "Error";
+        weatherMessage = "Unable to update weather data";
+        cityName = "";
+        return;
+      }
+      double temp = weatherData['main']['temp'];
+      temperature = temp.toInt();
+      var condition = weatherData['weather'][0]['id'];
+      weatherIcon = weather.getWeatherIcon(condition);
+      weatherMessage = weather.getMessage(temperature!);
+      cityName = weatherData['name'];
+    });
   }
 
   @override
@@ -56,25 +65,27 @@ class _LocationScreenState extends State<LocationScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
-                  TextButton(
-                    onPressed: () {},
-                    // ignore: prefer_const_constructors
-                    child: Icon(
+                  IconButton(
+                    onPressed: () {
+                      var weatherData = weather.getLocationWeather();
+                      updateUI(weatherData);
+                    },
+                    icon: const Icon(
                       Icons.near_me,
-                      size: 50.0,
+                      size: 35,
                     ),
                   ),
-                  TextButton(
+                  IconButton(
                     onPressed: () {},
-                    child: const Icon(
+                    icon: const Icon(
                       Icons.location_city,
-                      size: 50.0,
+                      size: 35,
                     ),
                   ),
                 ],
               ),
               Padding(
-                padding: EdgeInsets.only(left: 15.0),
+                padding: const EdgeInsets.only(left: 15.0),
                 child: Row(
                   children: <Widget>[
                     Text(
@@ -104,9 +115,3 @@ class _LocationScreenState extends State<LocationScreen> {
     );
   }
 }
-
-
-
-    // print(temperature);
-    // print(condition);
-    // print(cityName);
