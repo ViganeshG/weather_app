@@ -16,6 +16,8 @@ dependencies:
   geolocator: ^9.0.1
   http: ^0.13.5
   flutter_spinkit: ^5.1.0
+  dart_date: ^1.1.1
+  intl: ^0.17.0
 
 dev_dependencies:
   flutter_test:
@@ -30,7 +32,10 @@ flutter:
     - images/
 
   fonts:
-    - family: Spartan MB
+    - family: Hubballi
       fonts:
-        - asset: fonts/SpartanMB-Black.otf
-          weight: 900
+        - asset: fonts/Hubballi-Regular.ttf
+
+    - family: MavenPro
+      fonts:
+        - asset: fonts/static/MavenPro-Regular.ttf

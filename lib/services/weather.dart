@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:weather_app/services/location.dart';
 import 'package:weather_app/services/networking.dart';
 
@@ -27,19 +28,19 @@ class WeatherModel {
 
   String getWeatherIcon(int condition) {
     if (condition < 300) {
-      return '🌩';
+      return 'images/storm.png';
     } else if (condition < 400) {
-      return '🌧';
+      return 'images/rain.png';
     } else if (condition < 600) {
-      return '☔️';
+      return 'images/umbrella.png';
     } else if (condition < 700) {
-      return '☃️';
+      return 'images/snow.png';
     } else if (condition < 800) {
-      return '🌫';
+      return 'images/fog.png';
     } else if (condition == 800) {
-      return '☀️';
+      return 'images/sun.png';
     } else if (condition <= 804) {
-      return '☁️';
+      return 'images/cloud.png';
     } else {
       return '🤷‍';
     }
