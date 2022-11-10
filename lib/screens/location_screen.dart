@@ -18,9 +18,14 @@ class LocationScreen extends StatefulWidget {
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weather = WeatherModel();
   int? temperature;
+  int? humidity;
+  double? wind;
   String? weatherIcon;
   String? cityName;
   String? weatherMessage;
+  double? windKmh;
+  int? windDirection;
+
   // String? timeString;
 
   @override
@@ -36,9 +41,16 @@ class _LocationScreenState extends State<LocationScreen> {
         weatherIcon = null;
         weatherMessage = "Unable to update weather data";
         cityName = "";
+        windKmh = 0;
+
         return;
       }
       double temp = weatherData['main']['temp'];
+      int humidity = weatherData['main']['humidity'];
+      double wind = weatherData['wind']['speed'];
+      int windDirection = weatherData['wind']['deg'];
+      windKmh = wind * 3.6;
+
       temperature = temp.toInt();
       var condition = weatherData['weather'][0]['id'];
       weatherIcon = weather.getWeatherIcon(condition);
@@ -51,16 +63,8 @@ class _LocationScreenState extends State<LocationScreen> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
+      // ignore: avoid_unnecessary_containers
       body: Container(
-        // decoration: BoxDecoration(
-        //   // image: DecorationImage(
-        //   //   image: const AssetImage('images/main.jpg'),
-        //   //   fit: BoxFit.cover,
-        //   //   colorFilter: ColorFilter.mode(
-        //   //       Colors.white.withOpacity(0.8), BlendMode.dstATop),
-        //   // ),
-        // ),
-        // constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -86,11 +90,15 @@ class _LocationScreenState extends State<LocationScreen> {
                 ),
                 child: Column(
                   children: [
+                    const Padding(
+                      padding: EdgeInsets.only(top: 45),
+                    ),
                     Text(
                       '$cityName ',
                       style: TextStyle(
                           fontFamily: 'MavenPro',
-                          fontSize: 35,
+                          fontSize: 45,
+                          fontWeight: FontWeight.w700,
                           color: Colors.white.withOpacity(0.9)),
                     ),
                     const SizedBox(
@@ -100,7 +108,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       DateFormat('MMMEd').format(DateTime.now()),
                       style: TextStyle(
                           fontFamily: 'MavenPro',
-                          fontSize: 15,
+                          fontSize: 20,
                           color: Colors.white.withOpacity(0.9)),
                     ),
                     const SizedBox(
@@ -109,27 +117,115 @@ class _LocationScreenState extends State<LocationScreen> {
                     Image.asset(
                       weatherIcon.toString(),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Text(
-                      '$temperature°',
-                      style: TextStyle(
-                          fontFamily: 'MavenPro',
-                          fontSize: 35,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white.withOpacity(0.9)),
-                    ),
-                    const SizedBox(
-                      height: 10,
-                    ),
                     Text(
                       '$weatherMessage',
                       style: TextStyle(
                           fontFamily: 'MavenPro',
-                          fontSize: 35,
+                          fontSize: 45,
                           fontWeight: FontWeight.bold,
                           color: Colors.white.withOpacity(0.9)),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      '$temperature°',
+                      style: const TextStyle(
+                          fontFamily: 'MavenPro',
+                          fontSize: 60,
+                          fontWeight: FontWeight.w800,
+                          color: Colors.white),
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'images/wind.png',
+                                width: size.width * 0.15,
+                              ),
+                              Text(
+                                '$windKmh Km/h',
+                                style: const TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Wind',
+                                style: TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'images/windsock.png',
+                                width: size.width * 0.15,
+                              ),
+                              Text(
+                                '$windDirection°',
+                                style: const TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Wind Direction',
+                                style: TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Image.asset(
+                                'images/humidity.png',
+                                width: size.width * 0.15,
+                              ),
+                              Text(
+                                '$humidity %',
+                                style: const TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              const Text(
+                                'Humidity',
+                                style: TextStyle(
+                                    fontFamily: 'Hubballi',
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
                     ),
                   ],
                 ),
@@ -182,15 +278,6 @@ class _LocationScreenState extends State<LocationScreen> {
               //       onTap: () {
               //         debugPrint('Card tapped.');
               //       },
-              //       child: SizedBox(
-              //         width: 300,
-              //         height: 100,
-              //         child: Text(
-              //           "It is $temperature°C in $cityName  ",
-              //           textAlign: TextAlign.justify,
-              //           style: kMessageTextStyle,
-              //         ),
-              //       ),
               //     ),
               //   ),
               // ),
