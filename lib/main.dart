@@ -9,6 +9,9 @@ void main() {
       statusBarColor: Colors.transparent,
     ),
   );
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  // ]);
   runApp(const MyApp());
 }
 

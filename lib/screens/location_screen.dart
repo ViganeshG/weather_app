@@ -1,6 +1,8 @@
-// ignore_for_file: library_private_types_in_public_api, unused_local_variable
-import 'package:dart_date/dart_date.dart';
+// ignore_for_file: library_private_types_in_public_api, unused_local_variable, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
+import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
+import 'package:weather_app/screens/loading_screen.dart';
 import '../utilities/constants.dart';
 import 'package:weather_app/services/weather.dart';
 import "city_screen.dart";
@@ -16,15 +18,30 @@ class LocationScreen extends StatefulWidget {
 }
 
 class _LocationScreenState extends State<LocationScreen> {
+  //shifting pages
+  int pageIndex = 0;
+  PageController pageController = PageController();
+  changeIndex({required int value}) {
+    setState(() {
+      pageIndex = value;
+    });
+  }
+
   WeatherModel weather = WeatherModel();
   int? temperature;
   int? humidity;
+  int? humid;
   double? wind;
   String? weatherIcon;
   String? cityName;
   String? weatherMessage;
   double? windKmh;
   int? windDirection;
+  double? windGust;
+  double? windgus;
+  int? windDir;
+  int? pressure;
+  int? press;
 
   // String? timeString;
 
@@ -42,6 +59,9 @@ class _LocationScreenState extends State<LocationScreen> {
         weatherMessage = "Unable to update weather data";
         cityName = "";
         windKmh = 0;
+        windDir = 0;
+        windgus = 0;
+        press = 0;
 
         return;
       }
@@ -49,9 +69,16 @@ class _LocationScreenState extends State<LocationScreen> {
       int humidity = weatherData['main']['humidity'];
       double wind = weatherData['wind']['speed'];
       int windDirection = weatherData['wind']['deg'];
-      windKmh = wind * 3.6;
+      int pressure = weatherData['main']['pressure'];
+      press = pressure;
+      windDir = windDirection;
 
+      windKmh = wind * 3.6;
       temperature = temp.toInt();
+      double windGust = weatherData['wind']['gust'];
+      windgus = windGust;
+      humid = humidity;
+
       var condition = weatherData['weather'][0]['id'];
       weatherIcon = weather.getWeatherIcon(condition);
       weatherMessage = weather.getMessage(temperature!);
@@ -80,8 +107,8 @@ class _LocationScreenState extends State<LocationScreen> {
                   color: Colors.red,
                   gradient: const LinearGradient(
                     colors: [
-                      Color.fromARGB(235, 161, 235, 0),
-                      Color.fromARGB(133, 80, 202, 239),
+                      Color.fromARGB(235, 235, 0, 0),
+                      Color.fromARGB(133, 17, 33, 39),
                     ],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,
@@ -94,7 +121,7 @@ class _LocationScreenState extends State<LocationScreen> {
                       padding: EdgeInsets.only(top: 45),
                     ),
                     Text(
-                      '$cityName ',
+                      '$cityName',
                       style: TextStyle(
                           fontFamily: 'MavenPro',
                           fontSize: 45,
@@ -136,6 +163,9 @@ class _LocationScreenState extends State<LocationScreen> {
                           fontWeight: FontWeight.w800,
                           color: Colors.white),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     Row(
                       children: [
                         Expanded(
@@ -145,8 +175,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                 'images/wind.png',
                                 width: size.width * 0.15,
                               ),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               Text(
-                                '$windKmh Km/h',
+                                windKmh!.toStringAsFixed(2) + ' km/h',
                                 style: const TextStyle(
                                     fontFamily: 'Hubballi',
                                     fontSize: 20,
@@ -174,8 +207,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                 'images/windsock.png',
                                 width: size.width * 0.15,
                               ),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               Text(
-                                '$windDirection°',
+                                '$windDir°',
                                 style: const TextStyle(
                                     fontFamily: 'Hubballi',
                                     fontSize: 20,
@@ -203,8 +239,11 @@ class _LocationScreenState extends State<LocationScreen> {
                                 'images/humidity.png',
                                 width: size.width * 0.15,
                               ),
+                              const SizedBox(
+                                height: 5,
+                              ),
                               Text(
-                                '$humidity %',
+                                '$humid%',
                                 style: const TextStyle(
                                     fontFamily: 'Hubballi',
                                     fontSize: 20,
@@ -230,6 +269,66 @@ class _LocationScreenState extends State<LocationScreen> {
                   ],
                 ),
               ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Wind Gust',
+                          style: TextStyle(
+                              fontFamily: 'Hubballi',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          windgus!.toStringAsFixed(2) + ' m/s',
+                          style: TextStyle(
+                            fontFamily: 'Hubballi',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        const Text(
+                          'Pressure',
+                          style: TextStyle(
+                              fontFamily: 'Hubballi',
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          '$press',
+                          style: TextStyle(
+                            fontFamily: 'Hubballi',
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white.withOpacity(0.8),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+
               // Row(
               //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //   children: <Widget>[
@@ -284,6 +383,21 @@ class _LocationScreenState extends State<LocationScreen> {
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: FluidNavBar(
+        defaultIndex: 0,
+        style: FluidNavBarStyle(
+            iconUnselectedForegroundColor: Colors.amber,
+            iconSelectedForegroundColor: Colors.white,
+            iconBackgroundColor: Colors.deepOrangeAccent,
+            barBackgroundColor: Colors.deepOrangeAccent.withOpacity(0.7)),
+        icons: [
+          FluidNavBarIcon(icon: Icons.home),
+          FluidNavBarIcon(icon: Icons.search),
+        ],
+        onChange: (val) {
+          changeIndex(value: val);
+        },
       ),
     );
   }

@@ -57,4 +57,30 @@ class WeatherModel {
       return 'Bring a 🧥 just in case';
     }
   }
+
+  String getWindDirection(int direction) {
+    if (348 < direction && direction > 11) {
+      return 'N';
+    }
+    if (348 > direction && direction < 11) {
+      return 'NE';
+    }
+    if (348 > direction && direction < 11) {
+      return 'NW';
+    }
+    if (348 > direction && direction < 11) {
+      return 'NS';
+    }
+    if (348 > direction && direction < 11) {
+      return '';
+    }
+    if (348 > direction && direction < 11) {
+      return 'N';
+    }
+    if (348 > direction && direction < 11) {
+      return 'N';
+    } else {
+      return 'Bring a 🧥 just in case';
+    }
+  }
 }
