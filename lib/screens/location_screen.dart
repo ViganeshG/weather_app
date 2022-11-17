@@ -387,10 +387,10 @@ class _LocationScreenState extends State<LocationScreen> {
       bottomNavigationBar: FluidNavBar(
         defaultIndex: 0,
         style: FluidNavBarStyle(
-            iconUnselectedForegroundColor: Colors.amber,
-            iconSelectedForegroundColor: Colors.white,
-            iconBackgroundColor: Colors.deepOrangeAccent,
-            barBackgroundColor: Colors.deepOrangeAccent.withOpacity(0.7)),
+            iconUnselectedForegroundColor: Colors.blueGrey[700],
+            iconSelectedForegroundColor: Colors.blueAccent[800],
+            iconBackgroundColor: Colors.white,
+            barBackgroundColor: const Color.fromARGB(235, 235, 0, 0)),
         icons: [
           FluidNavBarIcon(icon: Icons.home),
           FluidNavBarIcon(icon: Icons.search),

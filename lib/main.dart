@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       title: "Flutter Weather App",
       theme: ThemeData(
         scaffoldBackgroundColor: const Color(0xff081b25),
+        useMaterial3: true,
       ),
       home: LoadingScreen(),
     );
