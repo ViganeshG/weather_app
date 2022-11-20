@@ -1,16 +1,10 @@
-# weather_app
+Weather App using Flutter
 
-A new Flutter project.
+Its a basic weather app which is created by using free OpenWeatherApi
 
-## Getting Started
 
-This project is a starting point for a Flutter application.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![WhatsApp Image 2022-11-20 at 11 46 06 AM](https://user-images.githubusercontent.com/71513635/202888813-12aaad25-5b08-43e6-b022-bb8553e36305.jpeg)
+Home Page 
+![WhatsApp Image 2022-11-20 at 11 46 56 AM](https://user-images.githubusercontent.com/71513635/202888829-a1d5b3c2-9d83-4433-8f49-b8d2e8c01239.jpeg)
+Search Page
